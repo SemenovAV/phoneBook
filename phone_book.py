@@ -4,21 +4,30 @@ from contact import Contact
 class PhoneBook:
     def __init__(self, book_title):
         self.title = book_title
-        self.book = set()
+        self.book = {}
 
     def view_contacts(self):
-        for contact in self.book:
-            print(contact)
+        contacts = f'{self.title}:'
+        for contact in self.book.values():
+            contacts += contact.__str__()
+        return contacts
 
-    def add_contact(self, contact):
-        if isinstance(contact, Contact):
-            self.book.add(contact)
+    def add_contact(self, first_name, last_name, phone_number, *args, favourites=False, **kwargs):
+        self.book[phone_number] = Contact(first_name, last_name, phone_number, *args, favourites, **kwargs)
 
     def del_contact(self, number):
-        self.book.remove(filter(lambda x: x['phone_number'] == number, self.book))
+        self.book.pop(number, False)
 
-    def search_favourites(self):
-        return filter(lambda x: x['favourites'], self.book)
+    def get_favourites(self):
+        result = 'В избранноми ни чего нет!'
+        for contact in filter(lambda x: x.favourites, self.book.values()):
+            result = 'Избранные контакты:\n'
+            result += contact.__str__()
+        return result
 
     def search_for_name(self, first_name, last_name):
-        return filter(lambda x: x['first_name'] == first_name and x['last_name'] == last_name, self.book)
+        result = 'Контакт не найден'
+        for contact in filter(lambda x: x.first_name == first_name and x.last_name == last_name, self.book.values()):
+            result = 'Результат поиска:'
+            result += contact.__str__()
+        return result
