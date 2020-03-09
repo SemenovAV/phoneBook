@@ -2,7 +2,6 @@ def adv_print(*args, **kwargs):
     start = kwargs.get('start', '')
     max_line = int(kwargs.get('max_line', False))
     in_file = kwargs.get('in_file', False)
-    print(in_file)
     strings = list(args)
 
     def get_lines(words):

@@ -8,8 +8,11 @@ class PhoneBook:
 
     def view_contacts(self):
         contacts = f'{self.title}:'
-        for contact in self.book.values():
-            contacts += contact.__str__()
+        if len(self.book) > 0:
+            for contact in self.book.values():
+                contacts += contact.__str__()
+        else:
+            contacts += f'\n  Не найдено ни одного контакта!'
         return contacts
 
     def add_contact(self, first_name, last_name, phone_number, *args, favourites=False, **kwargs):
