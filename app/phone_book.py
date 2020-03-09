@@ -1,4 +1,4 @@
-from contact import Contact
+from app.contact import Contact
 
 
 class PhoneBook:
