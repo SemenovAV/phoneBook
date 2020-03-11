@@ -9,7 +9,7 @@ def adv_print(*args, **kwargs):
         result = []
         for string in words:
             lines = []
-            for item in string.split(' '):
+            for item in str(string).split(' '):
                 length += len(item)
                 if max_line and length > max_line - 1:
                     length = 0
@@ -21,7 +21,7 @@ def adv_print(*args, **kwargs):
             result.append(start + lines)
         return result
 
-    print(*get_lines(strings))
+    print(*get_lines(strings), **kwargs)
     if in_file:
         with open(f'{in_file}', 'w', encoding='utf8') as f:
             print(*get_lines(strings), file=f)
