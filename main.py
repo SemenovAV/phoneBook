@@ -1,5 +1,5 @@
-from app.phone_book import PhoneBook
 from app.adv_print import adv_print
+from app.phone_book import PhoneBook
 
 
 def get_info(**kwargs):
@@ -40,12 +40,22 @@ search_for_name_props = {
     'first_name': 'Имя',
     'last_name': 'Фамилия'
 }
+commands = {
+    'H': lambda: print('"q" - выход\n'
+                       '"n" - новый контакт\n'
+                       '"f" - показать избранные контакты\n'
+                       '"s" - поиск по имени\n')
+
+}
 
 
 def frontend(title):
     book = PhoneBook(title)
-    help_message = 'Введите команду или "H" для помощи.'
-    adv_print(book.view_contacts(), help_message, end='\n')
+    adv_print(book.view_contacts())
+
+    while True:
+        command = get_info(title='', command='Введите команду или "H" для помощи')
+        commands[command['command']]()
 
 
 if __name__ == '__main__':
