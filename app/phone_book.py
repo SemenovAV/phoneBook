@@ -22,15 +22,9 @@ class PhoneBook:
         self.book.pop(number, False)
 
     def get_favourites(self):
-        result = 'В избранноми ни чего нет!'
         for contact in filter(lambda x: x.favourites, self.book.values()):
-            result = 'Избранные контакты:\n'
-            result += contact.__str__()
-        return result
+            print(contact)
 
     def search_for_name(self, first_name, last_name):
-        result = 'Контакт не найден'
         for contact in filter(lambda x: x.first_name == first_name and x.last_name == last_name, self.book.values()):
-            result = 'Результат поиска:'
-            result += contact.__str__()
-        return result
+            print(contact)

@@ -48,10 +48,13 @@ def frontend(title):
     commands = {
         'h': lambda: adv_print('"q" - выход\n'
                                '"n" - новый контакт\n'
+                               '"d" - удалить контакт\n'
                                '"f" - показать избранные контакты\n'
-                               '"s" - поиск по имени\n'),
+                               '"s" - поиск по имени\n'
+                               '"v" - вывести книгу на экран'),
         'n': lambda: book.add_contact(**get_info(**add_contact_props)),
         'd': lambda: book.del_contact(**get_info(**del_contact_props)),
+        'f': lambda: book.get_favourites(),
         's': lambda: adv_print(book.search_for_name(**get_info(**search_for_name_props))),
         'v': lambda: adv_print(book.view_contacts()),
 
