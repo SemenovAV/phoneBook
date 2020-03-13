@@ -8,18 +8,19 @@ def get_info(**kwargs):
     keys = [item for item in kwargs.keys()]
     title = kwargs['title']
     options = keys[1:]
-    print(f'\n{title}:\n')
+    print(f'{title}:')
     while count < len(options):
         active_key = options[count]
-        message = input(f'\t{kwargs[active_key]}: ').strip()
+        message = input(f'{kwargs[active_key]}: ').strip()
         if message == 'q':
-            break
+            return {'command': 'q'}
         elif message:
             count += 1
             result[active_key] = message
         else:
             print('Введите значение или ":q" для выхода')
-    return result
+
+    return {key: value for key, value in filter(lambda a: a[1] and a[1] != 'N', result.items())}
 
 
 add_contact_props = {
@@ -29,7 +30,7 @@ add_contact_props = {
     'phone_number': 'Основной телефонный номер',
     'favourites': 'Добавить в избранное (Y/N)',
     'additional_info': 'Дополнительная информация (в формате: " ключ: значение; ключ 2: значение 2;" или "N" чтобы пропустить поле)',
-    'additional_number': 'Дополнительные номера',
+    'additional_num': 'Дополнительные номера',
 }
 del_contact_props = {
     'title': 'Удаление контакта',
@@ -40,22 +41,27 @@ search_for_name_props = {
     'first_name': 'Имя',
     'last_name': 'Фамилия'
 }
-commands = {
-    'H': lambda: print('"q" - выход\n'
-                       '"n" - новый контакт\n'
-                       '"f" - показать избранные контакты\n'
-                       '"s" - поиск по имени\n')
-
-}
 
 
 def frontend(title):
     book = PhoneBook(title)
-    adv_print(book.view_contacts())
+    commands = {
+        'h': lambda: adv_print('"q" - выход\n'
+                               '"n" - новый контакт\n'
+                               '"f" - показать избранные контакты\n'
+                               '"s" - поиск по имени\n'),
+        'n': lambda: book.add_contact(**get_info(**add_contact_props)),
+        'd': lambda: book.del_contact(**get_info(**del_contact_props)),
+        's': lambda: adv_print(book.search_for_name(**get_info(**search_for_name_props))),
+        'v': lambda: adv_print(book.view_contacts()),
+
+    }
 
     while True:
-        command = get_info(title='', command='Введите команду или "H" для помощи')
-        commands[command['command']]()
+        command = get_info(title='', command='Введите команду или "h" для помощи или "q" для выхода.')
+        if command['command'] == 'q':
+            return
+        commands.get(command['command'], lambda: adv_print('Нет такой команды'))()
 
 
 if __name__ == '__main__':

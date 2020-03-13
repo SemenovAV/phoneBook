@@ -15,8 +15,8 @@ class PhoneBook:
             contacts += f'\n  Не найдено ни одного контакта!'
         return contacts
 
-    def add_contact(self, first_name, last_name, phone_number, *args, favourites=False, **kwargs):
-        self.book[phone_number] = Contact(first_name, last_name, phone_number, *args, favourites, **kwargs)
+    def add_contact(self, first_name, last_name, phone_number, favourites=False, *args, **kwargs):
+        self.book[phone_number] = Contact(first_name, last_name, phone_number, favourites, *args, **kwargs)
 
     def del_contact(self, number):
         self.book.pop(number, False)
